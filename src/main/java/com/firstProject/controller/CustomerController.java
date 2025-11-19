@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.List;
 
 @RestController
 @RequestMapping("/customer")
@@ -17,6 +18,16 @@ public class CustomerController {
     @GetMapping("/{id}")
     public Customer getCustomerById(@PathVariable Long id){
         return customerRepository.getCustomerById(id);
+    }
+
+    @GetMapping("/all")
+    public List<Customer> getCustomersByFirstName(@RequestParam String firstName){
+        return customerRepository.getCustomersByFirstName(firstName);
+    }
+
+    @GetMapping("/ids")
+    public List<Long> getCustomerIdsByFirstName(@RequestParam String firstName){
+        return customerRepository.getCustomerIdsByFirstName(firstName);
     }
 
     @PostMapping("/create")
