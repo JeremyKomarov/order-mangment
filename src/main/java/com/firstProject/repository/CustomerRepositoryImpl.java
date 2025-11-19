@@ -1,7 +1,9 @@
 package com.firstProject.repository;
 
 import com.firstProject.model.Customer;
+import com.firstProject.repository.mapper.CustomerMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -12,6 +14,17 @@ public class CustomerRepositoryImpl implements CustomerRepository {
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
+
+    @Override
+    public Customer getCustomerById(Long id) {
+        String sql = "SELECT * FROM " + CUSTOMER_TABLE_NAME +  " WHERE id=?";
+        try {
+            return jdbcTemplate.queryForObject(sql, new CustomerMapper(), id);
+        } catch (EmptyResultDataAccessException e) {
+            System.out.println("#Warning: EmptyResultDataAccessException");
+            return null;
+        }
+    }
 
     @Override
     public void createCustomer(Customer customer) {

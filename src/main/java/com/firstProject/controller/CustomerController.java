@@ -14,6 +14,11 @@ public class CustomerController {
     @Autowired
     private CustomerRepository customerRepository;
 
+    @GetMapping("/{id}")
+    public Customer getCustomerById(@PathVariable Long id){
+        return customerRepository.getCustomerById(id);
+    }
+
     @PostMapping("/create")
     public void createCustomer(@RequestBody Customer customer) {
         customerRepository.createCustomer(customer);
