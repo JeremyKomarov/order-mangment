@@ -1,12 +1,12 @@
-INSERT INTO customer (first_name, last_name, email)
-VALUES  ('Jeremy', 'Komarov', 'jeremy@test.com'),
-        ('Yossi', 'zad', 'Yossi@test.com'),
-        ('David', 'Zamil', 'david@test.com'),
-        ('Yossi', 'Lucky', 'YossiLuck@test.com'),
-        ('Jeremy', 'Zivon', 'Jeremy2@test.com'),
-        ('david', 'zad', 'david@test.com'),
-        ('da', 'sddd', 'da@test.com'),
-        ('yossi', 'qwe', 'yossi@test.com');
+INSERT INTO customer (first_name, last_name, email, customer_status)
+VALUES  ('Jeremy', 'Komarov', 'jeremy@test.com', 'VIP'),
+        ('Yossi', 'zad', 'Yossi@test.com', 'REGULAR'),
+        ('David', 'Zamil', 'david@test.com', 'VIP'),
+        ('Yossi', 'Lucky', 'YossiLuck@test.com', 'REGULAR'),
+        ('Jeremy', 'Zivon', 'Jeremy2@test.com', 'REGULAR'),
+        ('david', 'zad', 'david@test.com', 'REGULAR'),
+        ('da', 'sddd', 'da@test.com', 'REGULAR'),
+        ('yossi', 'qwe', 'yossi@test.com', 'REGULAR');
 
 
 INSERT INTO customer_order (customer_id, item_name, price)

@@ -1,6 +1,7 @@
 package com.firstProject.repository.mapper;
 
 import com.firstProject.model.Customer;
+import com.firstProject.model.CustomerStatus;
 import org.springframework.jdbc.core.RowMapper;
 
 import java.sql.ResultSet;
@@ -14,7 +15,8 @@ public class CustomerMapper implements RowMapper<Customer> {
                 rs.getLong("id"),
                 rs.getString("first_name"),
                 rs.getString("last_name"),
-                rs.getString("email")
+                rs.getString("email"),
+                CustomerStatus.valueOf(rs.getString("customer_status"))
         );
     }
 }

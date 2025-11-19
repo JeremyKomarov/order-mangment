@@ -19,7 +19,7 @@ public class CustomerRepositoryImpl implements CustomerRepository {
 
     @Override
     public Customer getCustomerById(Long id) {
-        String sql = "SELECT * FROM " + CUSTOMER_TABLE_NAME +  " WHERE id=?";
+        String sql = "SELECT * FROM " + CUSTOMER_TABLE_NAME +  " WHERE id = ?";
         try {
             return jdbcTemplate.queryForObject(sql, new CustomerMapper(), id);
         } catch (EmptyResultDataAccessException e) {
@@ -30,7 +30,7 @@ public class CustomerRepositoryImpl implements CustomerRepository {
 
     @Override
     public List<Customer> getCustomersByFirstName(String firstName) {
-        String sql = "SELECT * FROM " + CUSTOMER_TABLE_NAME + " WHERE first_name=?";
+        String sql = "SELECT * FROM " + CUSTOMER_TABLE_NAME + " WHERE first_name = ?";
         try {
             return jdbcTemplate.query(sql, new CustomerMapper(), firstName);
         } catch (EmptyResultDataAccessException e) {
@@ -41,7 +41,7 @@ public class CustomerRepositoryImpl implements CustomerRepository {
 
     @Override
     public List<Long> getCustomerIdsByFirstName(String firstName) {
-        String sql = "SELECT c.id FROM " + CUSTOMER_TABLE_NAME + " AS c WHERE first_name=?";
+        String sql = "SELECT c.id FROM " + CUSTOMER_TABLE_NAME + " AS c WHERE first_name = ?";
         try {
             return jdbcTemplate.queryForList(sql, Long.class, firstName);
         } catch (EmptyResultDataAccessException e) {
@@ -53,33 +53,35 @@ public class CustomerRepositoryImpl implements CustomerRepository {
     @Override
     public void createCustomer(Customer customer) {
         String sql = "INSERT INTO " + CUSTOMER_TABLE_NAME +
-                    " (first_name, last_name, email) VALUES (?, ?, ?)";
-
-        jdbcTemplate.update(
-                sql,
-                customer.getFirstName(),
-                customer.getLastName(),
-                customer.getEmail()
-        );
-    }
-
-    @Override
-    public void updateCustomer(Customer customer) {
-        String sql = "UPDATE " + CUSTOMER_TABLE_NAME + " SET first_name=?, last_name=?, email=?" +
-                " WHERE id=?";
+                    " (first_name, last_name, email, customer_status) VALUES (?, ?, ?, ?)";
 
         jdbcTemplate.update(
                 sql,
                 customer.getFirstName(),
                 customer.getLastName(),
                 customer.getEmail(),
+                customer.getCustomerStatus().name()
+        );
+    }
+
+    @Override
+    public void updateCustomer(Customer customer) {
+        String sql = "UPDATE " + CUSTOMER_TABLE_NAME + " SET first_name = ?, last_name = ?, email = ?, customer_status = ?" +
+                " WHERE id = ?";
+
+        jdbcTemplate.update(
+                sql,
+                customer.getFirstName(),
+                customer.getLastName(),
+                customer.getEmail(),
+                customer.getCustomerStatus().name(),
                 customer.getId()
         );
     }
 
     @Override
     public void deleteCustomer(Long id) {
-        String sql = "DELETE FROM " + CUSTOMER_TABLE_NAME + " WHERE id=?";
+        String sql = "DELETE FROM " + CUSTOMER_TABLE_NAME + " WHERE id = ?";
 
         jdbcTemplate.update(
                 sql,
