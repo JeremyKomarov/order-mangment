@@ -4,9 +4,9 @@ VALUES  ('Jeremy', 'Komarov', 'jeremy@test.com', 'VIP'),
         ('David', 'Zamil', 'david@test.com', 'VIP'),
         ('Yossi', 'Lucky', 'YossiLuck@test.com', 'REGULAR'),
         ('Jeremy', 'Zivon', 'Jeremy2@test.com', 'REGULAR'),
-        ('david', 'zad', 'david@test.com', 'REGULAR'),
+        ('david', 'zad', 'david@test.com', 'VIP'),
         ('da', 'sddd', 'da@test.com', 'REGULAR'),
-        ('yossi', 'qwe', 'yossi@test.com', 'REGULAR');
+        ('yossi', 'qwe', 'yossi@test.com', 'VIP');
 
 
 INSERT INTO customer_order (customer_id, item_name, price)

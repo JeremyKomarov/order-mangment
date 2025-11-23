@@ -1,6 +1,5 @@
 package com.firstProject;
 
-import com.firstProject.controller.CustomerController;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 

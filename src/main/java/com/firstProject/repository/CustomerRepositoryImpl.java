@@ -1,6 +1,7 @@
 package com.firstProject.repository;
 
 import com.firstProject.model.Customer;
+import com.firstProject.model.CustomerStatus;
 import com.firstProject.repository.mapper.CustomerMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -49,6 +50,18 @@ public class CustomerRepositoryImpl implements CustomerRepository {
             return null;
         }
     }
+
+    @Override
+    public List<Customer> getAllCustomersByStatus(CustomerStatus status) {
+        String sql = "SELECT * FROM " + CUSTOMER_TABLE_NAME + " WHERE customer_status=?";
+        try {
+            return jdbcTemplate.query(sql, new CustomerMapper(), status.name());
+        } catch (EmptyResultDataAccessException e) {
+            System.out.println("#Warning: EmptyResultDataAccessException");
+            return null;
+        }
+    }
+
 
     @Override
     public void createCustomer(Customer customer) {
