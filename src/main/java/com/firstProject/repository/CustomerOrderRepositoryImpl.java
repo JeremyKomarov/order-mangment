@@ -7,6 +7,8 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public class CustomerOrderRepositoryImpl implements CustomerOrderRepository{
     private static final String CUSTOMER_ORDER_TABLE_NAME = "customer_order";
@@ -60,6 +62,16 @@ public class CustomerOrderRepositoryImpl implements CustomerOrderRepository{
         } catch (EmptyResultDataAccessException e) {
             System.out.println("#Warning: EmptyResultDataAccessException");
             return null;
+        }
+    }
+
+    @Override
+    public List<CustomerOrder> getAllCustomerOrdersById(Long id) throws Exception {
+        String sql = "SELECT * FROM " + CUSTOMER_ORDER_TABLE_NAME + " WHERE customer_id = ?";
+        try {
+            return jdbcTemplate.query(sql, new CustomerOrderMapper(), id);
+        } catch (Exception e) {
+            throw new Exception("Some went wrong");
         }
     }
 }
