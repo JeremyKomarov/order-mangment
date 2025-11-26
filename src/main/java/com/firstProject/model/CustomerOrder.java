@@ -1,5 +1,7 @@
 package com.firstProject.model;
 
+import java.util.List;
+
 public class CustomerOrder {
     private Long id;
     private Long customerId;
@@ -14,19 +16,19 @@ public class CustomerOrder {
     }
 
     public Long getId() {
-        return id;
+        return this.id;
     }
 
     public Long getCustomerId() {
-        return customerId;
+        return this.customerId;
     }
 
     public String getItemName() {
-        return itemName;
+        return this.itemName;
     }
 
     public Double getPrice() {
-        return price;
+        return this.price;
     }
 
     public void setId(Long id) {
@@ -43,5 +45,12 @@ public class CustomerOrder {
 
     public void setPrice(Double price) {
         this.price = price;
+    }
+
+    public CustomerOrderResponse toCustomerOrderResponse(Customer customer, List<CustomerOrder> customerOrders) {
+        return new CustomerOrderResponse(
+                customer,
+                customerOrders
+        );
     }
 }

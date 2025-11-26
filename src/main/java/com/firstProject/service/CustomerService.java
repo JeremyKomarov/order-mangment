@@ -9,7 +9,7 @@ public interface CustomerService {
     Customer getCustomerById(Long id);
     List<Customer> getCustomersByFirstName(String firstName);
     List<Long> getCustomerIdsByFirstName(String firstName);
-    void createCustomer(Customer customer) throws JsonProcessingException;
-    void updateCustomer(Customer customer);
+    Long createCustomer(Customer customer) throws Exception;
+    void updateCustomer(Customer customer) throws Exception;
     void deleteCustomer(Long id);
 }

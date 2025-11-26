@@ -10,7 +10,7 @@ public interface CustomerRepository {
     List<Customer> getCustomersByFirstName(String firstName);
     List<Long> getCustomerIdsByFirstName(String firstName);
     List<Customer> getAllCustomersByStatus(CustomerStatus status);
-    void createCustomer (Customer customer);
+    Long createCustomer (Customer customer);
     void updateCustomer (Customer customer);
     void deleteCustomer (Long id);
 }

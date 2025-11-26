@@ -30,12 +30,12 @@ public class CustomerController {
     }
 
     @PostMapping("/create")
-    public void createCustomer(@RequestBody Customer customer) throws JsonProcessingException {
-        customerService.createCustomer(customer);
+    public Long createCustomer(@RequestBody Customer customer) throws Exception {
+        return customerService.createCustomer(customer);
     }
 
     @PutMapping("/update")
-    public void updateCustomer(@RequestBody Customer customer) {
+    public void updateCustomer(@RequestBody Customer customer) throws Exception {
         customerService.updateCustomer(customer);
     }
 

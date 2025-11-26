@@ -35,33 +35,28 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public void createCustomer(Customer customer) throws JsonProcessingException {
-        String customerAsString = objectMapper.writeValueAsString(customer);
-        System.out.println("starting to create a customer with customer details: " + customerAsString);
-        Customer customerFromString = objectMapper.readValue(customerAsString, Customer.class);
-
-        System.out.println("starting to create a customer with customer details: " + customerFromString);
+    public Long createCustomer(Customer customer) throws Exception {
 
         if (customer.getCustomerStatus().equals(CustomerStatus.VIP)) {
             List<Customer> vipCustomers = customerRepository.getAllCustomersByStatus(CustomerStatus.VIP);
             if(!(vipCustomers.size() > 5)) {
-                customerRepository.createCustomer(customer);
+                return customerRepository.createCustomer(customer);
             } else {
-                System.out.println("Could not create a new customer with status VIP - OUT OF LIMIT");
+                throw new Exception("Could not create a new customer with status VIP - OUT OF LIMIT");
             }
         } else {
-            customerRepository.createCustomer(customer);
+            return customerRepository.createCustomer(customer);
         }
     }
 
     @Override
-    public void updateCustomer(Customer customer) {
+    public void updateCustomer(Customer customer) throws Exception {
         if (customer.getCustomerStatus().equals(CustomerStatus.VIP)) {
             List<Customer> vipCustomers = customerRepository.getAllCustomersByStatus(CustomerStatus.VIP);
             if (!(vipCustomers.size() > 5)) {
                 customerRepository.updateCustomer(customer);
             } else {
-                System.out.println("Could not update a new customer with status VIP - OUT OF LIMIT");
+                throw new Exception("Could not create a new customer with status VIP - OUT OF LIMIT");
             }
         } else {
             customerRepository.updateCustomer(customer);
