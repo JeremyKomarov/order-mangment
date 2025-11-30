@@ -3,11 +3,13 @@ package com.firstProject.service;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.firstProject.model.Customer;
+import com.firstProject.model.CustomerOrder;
 import com.firstProject.model.CustomerStatus;
 import com.firstProject.repository.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
 
 @Service
@@ -20,7 +22,7 @@ public class CustomerServiceImpl implements CustomerService {
     ObjectMapper objectMapper;
 
     @Override
-    public Customer getCustomerById(Long id) {
+    public Customer getCustomerById(Long id) throws JsonProcessingException {
         return customerRepository.getCustomerById(id);
     }
 

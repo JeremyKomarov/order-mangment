@@ -13,3 +13,11 @@ spring:
 externalApi:
   tvMaze:
     url: https://api.tvmaze.com
+
+  lastFm:
+    url : https://ws.audioscrobbler.com/2.0
+
+redis:
+  host: localhost
+  port: 6379
+  ttl: 72000

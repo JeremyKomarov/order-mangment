@@ -1,7 +1,10 @@
 package com.firstProject.repository;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.firstProject.model.Customer;
 import com.firstProject.model.CustomerStatus;
+import com.firstProject.repository.redis.CacheRepository;
 import com.firstProject.repository.mapper.CustomerMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -18,14 +21,30 @@ public class CustomerRepositoryImpl implements CustomerRepository {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
+    @Autowired
+    CacheRepository cacheRepository;
+
+    @Autowired
+    ObjectMapper objectMapper;
+
     @Override
-    public Customer getCustomerById(Long id) {
-        String sql = "SELECT * FROM " + CUSTOMER_TABLE_NAME +  " WHERE id = ?";
-        try {
-            return jdbcTemplate.queryForObject(sql, new CustomerMapper(), id);
-        } catch (EmptyResultDataAccessException e) {
-            System.out.println("#Warning: EmptyResultDataAccessException");
-            return null;
+    public Customer getCustomerById(Long id) throws JsonProcessingException {
+        String customerFromCacheAsString = cacheRepository.getCacheEntity(id.toString());
+
+        if(customerFromCacheAsString == null) {
+            String sql = "SELECT * FROM " + CUSTOMER_TABLE_NAME +  " WHERE id = ?";
+            try {
+                Customer customerFromDb = jdbcTemplate.queryForObject(sql, new CustomerMapper(), id);
+                String customerAsString = objectMapper.writeValueAsString(customerFromDb);
+                cacheRepository.createCacheEntity(customerFromDb.getId().toString(), customerAsString);
+                return customerFromDb;
+            } catch (EmptyResultDataAccessException error) {
+                return null;
+            }
+
+        } else {
+            Customer customerFromCachesAsObject = objectMapper.readValue(customerFromCacheAsString, Customer.class);
+            return customerFromCachesAsObject;
         }
     }
 
@@ -102,5 +121,7 @@ public class CustomerRepositoryImpl implements CustomerRepository {
                 sql,
                 id
         );
+
+        cacheRepository.removeCacheEntity(id.toString());
     }
 }
