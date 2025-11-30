@@ -20,8 +20,8 @@ public class CustomerOrderController {
     }
 
     @PutMapping("/update")
-    public void updateCustomerOrder(@RequestBody CustomerOrder customerOrder) {
-        customerOrderService.updateCustomerOrder(customerOrder);
+    public CustomerOrderResponse updateCustomerOrder(@RequestBody CustomerOrder customerOrder) throws Exception {
+        return customerOrderService.updateCustomerOrder(customerOrder);
     }
 
     @DeleteMapping("/delete/{id}")

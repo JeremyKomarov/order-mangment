@@ -6,7 +6,7 @@ import com.firstProject.model.CustomerOrderResponse;
 
 public interface CustomerOrderService {
     CustomerOrderResponse createCustomerOrder(CustomerOrderRequest customerOrderRequest) throws Exception;
-    void updateCustomerOrder(CustomerOrder customerOrder);
+    CustomerOrderResponse updateCustomerOrder(CustomerOrder customerOrder) throws Exception;
     void deleteCustomerOrder(Long id);
     CustomerOrder getCustomerOrderById(Long id);
 }

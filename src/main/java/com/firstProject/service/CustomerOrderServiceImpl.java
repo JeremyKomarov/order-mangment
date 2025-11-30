@@ -55,8 +55,32 @@ public class CustomerOrderServiceImpl implements CustomerOrderService{
     }
 
     @Override
-    public void updateCustomerOrder(CustomerOrder customerOrder) {
-        customerOrderRepository.updateCustomerOrder(customerOrder);
+    public CustomerOrderResponse updateCustomerOrder(CustomerOrder customerOrder) throws Exception {
+        Customer customerForResponse = null;
+
+        if(customerOrder != null) {
+            CustomerOrder existingCustomerOrder = customerOrderRepository.getCustomerOrderById(customerOrder.getId());
+            if(existingCustomerOrder != null) {
+                if (existingCustomerOrder.getCustomerId().equals(customerOrder.getCustomerId())) {
+                    customerOrderRepository.updateCustomerOrder(customerOrder);
+                    customerForResponse = customerService.getCustomerById(customerOrder.getCustomerId());
+                } else {
+                    throw new Exception("This customer order does belong to this customer id " + customerOrder.getCustomerId());
+                }
+            } else {
+                throw new Exception("There is no customerOrder in the database with id " + customerOrder.getCustomerId());
+            }
+        } else {
+            throw new Exception("There is no customerOrder in this request");
+        }
+
+        List<CustomerOrder> customerOrderList = customerOrderRepository.getAllCustomerOrdersById(customerForResponse.getId());
+
+        CustomerOrderResponse customerOrderResponse = customerOrder.toCustomerOrderResponse(
+                customerForResponse,
+                customerOrderList
+        );
+        return customerOrderResponse;
     }
 
     @Override
