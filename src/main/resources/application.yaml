@@ -13,9 +13,10 @@ spring:
 externalApi:
   tvMaze:
     url: https://api.tvmaze.com
-
   lastFm:
     url : https://ws.audioscrobbler.com/2.0
+  studentService:
+    url: localhost:8081
 
 redis:
   host: localhost
